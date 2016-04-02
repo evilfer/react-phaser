@@ -24,12 +24,16 @@ var defaultPropValues = {
             });
         }
 
-        if (node.tag === 'animation') {
-            setAnimationProperties(nodes, gameNode, node, useProps, nextProps);
-        } else if (node.tag === 'collides') {
-            setCollidesProperties(nodes, gameNode, node, useProps, nextProps);
-        } else {
-            setActorProperties(gameNode, node, useProps, nextProps);
+
+        switch (node.tag) {
+            case 'animation':
+                return setAnimationProperties(nodes, gameNode, node, useProps, nextProps, prevProps);
+            case 'collides':
+                return setCollidesProperties(nodes, gameNode, node, useProps, nextProps);
+            case 'cursors':
+                return setCursorsProperties(nodes, gameNode, node, useProps, nextProps);
+            default:
+                return setActorProperties(gameNode, node, useProps, nextProps);
         }
     },
 
@@ -70,11 +74,33 @@ var defaultPropValues = {
     setCollidesProperties = function (nodes, gameNode, node, useProps, nextProps) {
         if (useProps[0] === 'with') {
             var collidesWithId = nodes.name2id[nextProps.with];
-            gameNode.collisions.push([node.parent, collidesWithId]);
+            node.obj = [node.parent, collidesWithId];
+            gameNode.collisions.push(node.obj);
         }
     },
-    setAnimationProperties = function (nodes, gameNode, node, useProps, nextProps) {
+    setCursorsProperties = function (nodes, gameNode, node, useProps, nextProps) {
+        if (useProps[0] === 'onInput') {
+            var onInput = nextProps.onInput,
+                cursors = gameNode.obj.input.keyboard.createCursorKeys(),
+                getActor = function (name) {
+                    return nodes.ids[nodes.name2id[name]].obj;
+                };
 
+            node.obj = {
+                cursors: cursors,
+                callback: function () {
+                    onInput(cursors, getActor)
+                }
+            };
+
+            gameNode.updateMethods.push(node.obj.callback);
+        }
+    },
+    setAnimationProperties = function (nodes, gameNode, node, useProps, nextProps, prevProps) {
+        if (prevProps === null) {
+            var parentNode = nodes.ids[node.parent];
+            node.obj = parentNode.obj.animations.add(nextProps.id, nextProps.frames, nextProps.fps, nextProps.loop);
+        }
     };
 
 

@@ -5003,13 +5003,13 @@ function PrismaticConstraint(bodyA, bodyB, options){
 
         G*W = [ -t      -ri x t + t x gg     t    rj x t ] * [vi wi vj wj]
 
-    The rotational part is just a rotation lock.
+    The rotational part6 is just a rotation lock.
 
      */
 
     var maxForce = this.maxForce = typeof(options.maxForce)!=="undefined" ? options.maxForce : Number.MAX_VALUE;
 
-    // Translational part
+    // Translational part6
     var trans = new Equation(bodyA,bodyB,-maxForce,maxForce);
     var ri = new vec2.create(),
         rj = new vec2.create(),
@@ -5039,7 +5039,7 @@ function PrismaticConstraint(bodyA, bodyB, options){
     };
     this.equations.push(trans);
 
-    // Rotational part
+    // Rotational part6
     if(!options.disableRotationalLock){
         var rot = new RotationalLockEquation(bodyA,bodyB,-maxForce,maxForce);
         this.equations.push(rot);
@@ -6104,7 +6104,7 @@ Equation.prototype.addToWlambda = function(deltalambda){
 };
 
 /**
- * Compute the denominator part of the SPOOK equation: C = G\*inv(M)\*G' + eps
+ * Compute the denominator part6 of the SPOOK equation: C = G\*inv(M)\*G' + eps
  * @method computeInvC
  * @param  {Number} eps
  * @return {Number}
@@ -27967,7 +27967,7 @@ Phaser.Camera = function (game, id, x, y, width, height) {
     this.visible = true;
 
     /**
-    * @property {boolean} roundPx - If a Camera has roundPx set to `true` it will call `view.floor` as part of its update loop, keeping its boundary to integer values. Set this to `false` to disable this from happening.
+    * @property {boolean} roundPx - If a Camera has roundPx set to `true` it will call `view.floor` as part6 of its update loop, keeping its boundary to integer values. Set this to `false` to disable this from happening.
     * @default
     */
     this.roundPx = true;
@@ -31662,7 +31662,7 @@ Phaser.Group.prototype.getAt = function (index) {
 * @param {number} x - The x coordinate to display the newly created Sprite at. The value is in relation to the group.x point.
 * @param {number} y - The y coordinate to display the newly created Sprite at. The value is in relation to the group.y point.
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} [key] - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-* @param {string|number} [frame] - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+* @param {string|number} [frame] - If this Sprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 * @param {boolean} [exists=true] - The default exists state of the Sprite.
 * @return {DisplayObject} The child that was created: will be a {@link Phaser.Sprite} unless {@link #classType} has been changed.
 */
@@ -32982,7 +32982,7 @@ Phaser.Group.prototype.iterate = function (key, value, returnType, callback, cal
 * @param {number} [x] - The x coordinate to reset the child to. The value is in relation to the group.x point.
 * @param {number} [y] - The y coordinate to reset the child to. The value is in relation to the group.y point.
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} [key] - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-* @param {string|number} [frame] - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+* @param {string|number} [frame] - If this Sprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 * @return {DisplayObject} The first child, or `null` if none found and `createIfNull` was false.
 */
 Phaser.Group.prototype.getFirstExists = function (exists, createIfNull, x, y, key, frame) {
@@ -33017,7 +33017,7 @@ Phaser.Group.prototype.getFirstExists = function (exists, createIfNull, x, y, ke
 * @param {number} [x] - The x coordinate to reset the child to. The value is in relation to the group.x point.
 * @param {number} [y] - The y coordinate to reset the child to. The value is in relation to the group.y point.
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} [key] - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-* @param {string|number} [frame] - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+* @param {string|number} [frame] - If this Sprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 * @return {DisplayObject} The alive dead child, or `null` if none found and `createIfNull` was false.
 */
 Phaser.Group.prototype.getFirstAlive = function (createIfNull, x, y, key, frame) {
@@ -33047,7 +33047,7 @@ Phaser.Group.prototype.getFirstAlive = function (createIfNull, x, y, key, frame)
 * @param {number} [x] - The x coordinate to reset the child to. The value is in relation to the group.x point.
 * @param {number} [y] - The y coordinate to reset the child to. The value is in relation to the group.y point.
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} [key] - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-* @param {string|number} [frame] - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+* @param {string|number} [frame] - If this Sprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 * @return {DisplayObject} The first dead child, or `null` if none found and `createIfNull` was false.
 */
 Phaser.Group.prototype.getFirstDead = function (createIfNull, x, y, key, frame) {
@@ -33072,7 +33072,7 @@ Phaser.Group.prototype.getFirstDead = function (createIfNull, x, y, key, frame) 
 * @param {number} [x] - The x coordinate to reset the child to. The value is in relation to the group.x point.
 * @param {number} [y] - The y coordinate to reset the child to. The value is in relation to the group.y point.
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} [key] - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-* @param {string|number} [frame] - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+* @param {string|number} [frame] - If this Sprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 * @return {DisplayObject} The child that was reset: usually a {@link Phaser.Sprite}.
 */
 Phaser.Group.prototype.resetChild = function (child, x, y, key, frame) {
@@ -35536,7 +35536,7 @@ Phaser.Input.prototype = {
 
     /**
     * Add a new Pointer object to the Input Manager.
-    * By default Input creates 3 pointer objects: `mousePointer` (not include in part of general pointer pool), `pointer1` and `pointer2`.
+    * By default Input creates 3 pointer objects: `mousePointer` (not include in part6 of general pointer pool), `pointer1` and `pointer2`.
     * This method adds an additional pointer, up to a maximum of Phaser.Input.MAX_POINTERS (default of 10).
     *
     * @method Phaser.Input#addPointer
@@ -35839,7 +35839,7 @@ Phaser.Input.prototype = {
     *
     * The identifier property is not set until the Pointer has been used at least once, as its populated by the DOM event.
     * Also it can change every time you press the pointer down, and is not fixed once set.
-    * Note: Not all browsers set the identifier property and it's not part of the W3C spec, so you may need getPointerFromId instead.
+    * Note: Not all browsers set the identifier property and it's not part6 of the W3C spec, so you may need getPointerFromId instead.
     *
     * @method Phaser.Input#getPointerFromIdentifier
     * @param {number} identifier - The Pointer.identifier value to search for.
@@ -45186,7 +45186,7 @@ Phaser.Component.LoadTexture.prototype = {
     *
     * @method
     * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} key - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-    * @param {string|number} [frame] - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+    * @param {string|number} [frame] - If this Sprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
     * @param {boolean} [stopAnimation=true] - If an animation is already playing on this Sprite you can choose to stop it or let it carry on playing.
     */
     loadTexture: function (key, frame, stopAnimation) {
@@ -46623,7 +46623,7 @@ Phaser.GameObjectCreator.prototype = {
     * @param {number} width - The width of the TileSprite.
     * @param {number} height - The height of the TileSprite.
     * @param {string|Phaser.RenderTexture|Phaser.BitmapData|PIXI.Texture} key - This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Cache entry, or an instance of a RenderTexture or PIXI.Texture.
-    * @param {string|number} frame - If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+    * @param {string|number} frame - If this TileSprite is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
     * @return {Phaser.TileSprite} The newly created tileSprite object.
     */
     tileSprite: function (x, y, width, height, key, frame) {
@@ -46641,7 +46641,7 @@ Phaser.GameObjectCreator.prototype = {
     * @param {number} width - The width of the Rope.
     * @param {number} height - The height of the Rope.
     * @param {string|Phaser.RenderTexture|Phaser.BitmapData|PIXI.Texture} key - This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Cache entry, or an instance of a RenderTexture or PIXI.Texture.
-    * @param {string|number} frame - If this Rope is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+    * @param {string|number} frame - If this Rope is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
     * @return {Phaser.Rope} The newly created rope object.
     */
     rope: function (x, y, key, frame, points) {
@@ -48142,7 +48142,7 @@ Phaser.BitmapData.prototype = {
     /**
     * Takes the given Game Object, resizes this BitmapData to match it and then draws it into this BitmapDatas canvas, ready for further processing.
     * The source game object is not modified by this operation.
-    * If the source object uses a texture as part of a Texture Atlas or Sprite Sheet, only the current frame will be used for sizing.
+    * If the source object uses a texture as part6 of a Texture Atlas or Sprite Sheet, only the current frame will be used for sizing.
     * If a string is given it will assume it's a cache key and look in Phaser.Cache for an image key matching the string.
     *
     * @method Phaser.BitmapData#load
@@ -61089,7 +61089,7 @@ Phaser.QuadTree.prototype = {
     *
     * @method Phaser.QuadTree#getIndex
     * @param {Phaser.Rectangle|object} rect - The bounds in which to check.
-    * @return {number} index - Index of the subnode (0-3), or -1 if rect cannot completely fit within a subnode and is part of the parent node.
+    * @return {number} index - Index of the subnode (0-3), or -1 if rect cannot completely fit within a subnode and is part6 of the parent node.
     */
     getIndex: function (rect) {
 
@@ -61275,7 +61275,7 @@ Phaser.Net.prototype = {
     /**
     * Compares the given domain name against the hostname of the browser containing the game.
     * If the domain name is found it returns true.
-    * You can specify a part of a domain, for example 'google' would match 'google.com', 'google.co.uk', etc.
+    * You can specify a part6 of a domain, for example 'google' would match 'google.com', 'google.co.uk', etc.
     * Do not include 'http://' at the start.
     *
     * @method Phaser.Net#checkDomainName
@@ -68691,7 +68691,7 @@ Phaser.Cache.prototype = {
     *
     * @method Phaser.Cache#getPhysicsData
     * @param {string} key - The key of the asset to retrieve from the cache.
-    * @param {string} [object=null] - If specified it will return just the physics object that is part of the given key, if null it will return them all.
+    * @param {string} [object=null] - If specified it will return just the physics object that is part6 of the given key, if null it will return them all.
     * @param {string} fixtureKey - Fixture key of fixture inside an object. This key can be set per fixture with the Phaser Exporter.
     * @return {object} The requested physics object data if found.
     */
@@ -85635,7 +85635,7 @@ Phaser.Physics.P2.prototype = {
     },
 
     /**
-    * Removes a body from the world. This will silently fail if the body wasn't part of the world to begin with.
+    * Removes a body from the world. This will silently fail if the body wasn't part6 of the world to begin with.
     *
     * @method Phaser.Physics.P2#removeBody
     * @param {Phaser.Physics.P2.Body} body - The Body to remove from the World.
@@ -90199,7 +90199,7 @@ Phaser.ImageCollection = function (name, firstgid, width, height, margin, spacin
     this.properties = properties || {};
 
     /**
-    * The cached images that are a part of this collection.
+    * The cached images that are a part6 of this collection.
     * @property {array} images
     * @readonly
     */
@@ -95637,7 +95637,7 @@ Phaser.Particles.Arcade.Emitter.prototype.start = function (explode, lifespan, f
 * @param {number} [x] - The x coordinate to emit the particle from. If `null` or `undefined` it will use `Emitter.emitX` or if the Emitter has a width > 1 a random value between `Emitter.left` and `Emitter.right`.
 * @param {number} [y] - The y coordinate to emit the particle from. If `null` or `undefined` it will use `Emitter.emitY` or if the Emitter has a height > 1 a random value between `Emitter.top` and `Emitter.bottom`.
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|Phaser.Video|PIXI.Texture} [key] - This is the image or texture used by the Particle during rendering. It can be a string which is a reference to the Cache Image entry, or an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
-* @param {string|number} [frame] - If this Particle is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+* @param {string|number} [frame] - If this Particle is using part6 of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 * @return {boolean} True if a particle was emitted, otherwise false.
 */
 Phaser.Particles.Arcade.Emitter.prototype.emitParticle = function (x, y, key, frame) {

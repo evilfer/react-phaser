@@ -27,6 +27,7 @@ var setProperties = require('./properties'),
                     break;
                 case 'animation':
                 case 'collides':
+                case 'cursors':
                     setProperties(nodes, gameNode, child, child.props);
                     break;
             }
@@ -62,9 +63,13 @@ var setProperties = require('./properties'),
                     var c = gameNode.collisions[i];
                     gameNode.obj.physics.arcade.collide(nodes.ids[c[0]].obj, nodes.ids[c[1]].obj);
                 }
+                for (i = 0; i < gameNode.updateMethods.length; i++) {
+                    gameNode.updateMethods[i]();
+                }
             }
         };
         gameNode.collisions = [];
+        gameNode.updateMethods = [];
         gameNode.obj = new Phaser.Game(width, height, mode, '', gameImpl);
     };
 

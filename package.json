@@ -13,14 +13,14 @@
   "author": "Eloy Villasclaras <eloy.villasclaras@gmail.com>",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/evilfer/react-phaser.git/issues"
+    "url": "https://github.com/evilfer/react-phaser/issues"
   },
   "keywords": ["React", "Phaser"],
   "dependencies": {
     "invariant": "^2.2.1",
     "p2": "^0.7.1",
     "phaser": "^2.4.6",
-    "react-anything": "^0.1.2"
+    "react-anything": "^0.1.3"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",

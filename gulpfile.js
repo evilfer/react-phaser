@@ -4,11 +4,6 @@ var gulp = require('gulp'),
 
     webpack = require('webpack'),
 
-    phaserModule = path.join(__dirname, '/node_modules/phaser/'),
-    phaser = path.join(phaserModule, 'build/custom/phaser-split.js'),
-    pixi = path.join(phaserModule, 'build/custom/pixi.js'),
-    p2 = path.join(phaserModule, 'build/custom/p2.js'),
-
     jsTaskGen = function (mode) {
         var isProd = mode === 'prod',
             doWatch = mode === 'watch',
@@ -17,7 +12,8 @@ var gulp = require('gulp'),
         return function () {
             return webpack({
                 entry: {
-                    'part8/part8': './src/examples/part8.js'
+                    'part5/part5': './src/examples/part5.js',
+                    'part6/part6': './src/examples/part6.js'
                 },
                 watch: doWatch,
                 module: {

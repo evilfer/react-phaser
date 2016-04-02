@@ -5,6 +5,26 @@ var React = require('../native'),
         'ground': {type: 'image', src: '../assets/platform.png'},
         'star': {type: 'image', src: '../assets/star.png'},
         'dude': {type: 'spritesheet', src: '../assets/dude.png', width: 32, height: 48}
+    },
+
+    onCursorInput = function (cursors, getActor) {
+        var player = getActor('player');
+
+        if (cursors.left.isDown) {
+            player.body.velocity.x = -150;
+            player.animations.play('left');
+        } else if (cursors.right.isDown) {
+            player.body.velocity.x = 150;
+            player.animations.play('right');
+        } else {
+            player.body.velocity.x = 0;
+            player.animations.stop();
+            player.frame = 4;
+        }
+
+        if (cursors.up.isDown && player.body.touching.down) {
+            player.body.velocity.y = -350;
+        }
     };
 
 React.render((
@@ -19,9 +39,10 @@ React.render((
         <sprite name="player" x={32} y={450} sprite="dude"
                 physics={true} bounceY={0.2} gravityY={300}
                 collideWorldBounds={true}>
-            <animation id="left" frames={[0, 1, 2, 3]} loop={true}/>
-            <animation id="right" frames={[5, 6, 7, 8]} loop={true}/>
+            <animation id="left" frames={[0, 1, 2, 3]} fps={10} loop={true}/>
+            <animation id="right" frames={[5, 6, 7, 8]} fps={10} loop={true}/>
             <collides with="platforms"/>
         </sprite>
+        <cursors onInput={onCursorInput}/>
     </game>
 ), 'game');
