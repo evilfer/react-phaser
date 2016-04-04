@@ -6,6 +6,9 @@ var mount = function (nodes, node) {
     var nodeType = nodeTypes[node.tag];
     if (nodeType) {
         nodeType.mount(nodes, node);
+        if (node.obj) {
+            node.obj.rnodeid = node.id;
+        }
     }
 };
 
@@ -24,7 +27,7 @@ var update = function (nodes, node, prevProps) {
         });
 
         if (changedProps.length > 0) {
-            nodeType.update(nodes, node, changedProps, lastProps);
+            nodeType.update(nodes, node, changedProps, prevProps);
         }
     }
 };
@@ -34,10 +37,10 @@ var unmount = function (nodes, node) {
     if (nodeType) {
         nodeType.unmount(nodes, node);
     }
-}
+};
 
 module.exports = {
     mount: mount,
     unmount: unmount,
-    udpate: update
+    update: update
 };

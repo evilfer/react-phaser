@@ -9,11 +9,14 @@ var utils = require('./utils'),
         node.obj = new Phaser.Sprite(nodes.game(), x, y, sprite);
         utils.addNodeDisplayObject(nodes, node);
         updateSprite(nodes, node);
+    },
+
+    unmountSprite = function (nodes, node) {
+        node.obj.kill();
     };
 
 module.exports = {
     mount: mountSprite,
-    unmount: function () {
-    },
+    unmount: unmountSprite,
     update: updateSprite
 };

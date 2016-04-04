@@ -6,5 +6,6 @@ module.exports = {
     group: require('./group'),
     animation: require('./animation'),
     cursors: require('./cursors'),
-    collides: require('./collides')
+    collides: require('./collides'),
+    overlaps: require('./overlaps')
 };

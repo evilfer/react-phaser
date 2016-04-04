@@ -3,6 +3,7 @@
 var mountGame = function (nodes, node) {
 
     node.collisions = [];
+    node.overlaps = [];
     node.updateMethods = [];
 
     if (node.props.hasOwnProperty('physics')) {

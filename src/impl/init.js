@@ -27,6 +27,13 @@ var nodeManager = require('./node-manager'),
                     var c = nodes.gameNode.collisions[i];
                     nodes.gameNode.obj.physics.arcade.collide(nodes.ids[c[0]].obj, nodes.ids[c[1]].obj);
                 }
+                for (i = 0; i < nodes.gameNode.overlaps.length; i++) {
+                    var overlap = nodes.gameNode.overlaps[i];
+                    nodes.gameNode.obj.physics.arcade.overlap(
+                        nodes.ids[overlap.pair[0]].obj,
+                        nodes.ids[overlap.pair[1]].obj,
+                        overlap.callback, null, this);
+                }
                 for (i = 0; i < nodes.gameNode.updateMethods.length; i++) {
                     nodes.gameNode.updateMethods[i]();
                 }

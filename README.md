@@ -14,3 +14,4 @@ browser you need to serve them from a web server.
 - `part5`: demonstrates loading assets, creating sprites and groups, and
 defining colliding actors.
 - `part6`: demonstrate keyboard input.
+- `part7`: demonstrate modifying the VDOM (removing sprite) during the game.
