@@ -34,5 +34,10 @@ module.exports = {
         'collideWorldBounds': function (nodes, node, value) {
             node.obj.body.collideWorldBounds = value;
         }
+    },
+    'text': {
+        'content': function (nodes, node, value) {
+            node.obj.text = value;
+        }
     }
 };

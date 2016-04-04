@@ -15,4 +15,3 @@ browser you need to serve them from a web server.
 defining colliding actors.
 - `part6`: demonstrate keyboard input.
 - `part7`: demonstrate modifying the VDOM (removing sprite) during the game.
-V

@@ -14,7 +14,8 @@ var gulp = require('gulp'),
                 entry: {
                     'part5/part5': './src/examples/part5.js',
                     'part6/part6': './src/examples/part6.js',
-                    'part7/part7': './src/examples/part7.js'
+                    'part7/part7': './src/examples/part7.js',
+                    'part8/part8': './src/examples/part8.js'
                 },
                 watch: doWatch,
                 module: {

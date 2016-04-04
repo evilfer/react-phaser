@@ -7,5 +7,6 @@ module.exports = {
     animation: require('./animation'),
     cursors: require('./cursors'),
     collides: require('./collides'),
-    overlaps: require('./overlaps')
+    overlaps: require('./overlaps'),
+    text: require('./text')
 };
