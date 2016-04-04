@@ -10,25 +10,21 @@
 
 var invariant = require('invariant');
 
-var gameImpl = require('./impl/game');
 
-var nodes = {
-    ids: {},
-    name2id: {},
-    id2name: {}
-};
+var nodeManager = require('./impl/node-manager.js');
+var init = require('./impl/init');
+var Nodes = require('./impl/nodes');
 
+var nodes = new Nodes();
 var running = false;
-var gameNode;
-var game;
 
 
 module.exports = {
     components: {
         mount: function (id, tag, props, parent) {
-            invariant(!(tag === 'game' && gameNode), 'Only one game node can be mounted.');
+            invariant(!(tag === 'game' && nodes.gameNode), 'Only one game node can be mounted.');
             invariant(!(tag !== 'game' && !parent), 'Only \'game\' can be root node.');
-            invariant(!(props.name && nodes.name2id.hasOwnProperty(props.name)), 'Cannot repeat names.');
+            invariant(!(props.name && nodes.idByName(props.name)), 'Cannot repeat names.');
 
             var node = {
                 id: id,
@@ -41,54 +37,45 @@ module.exports = {
                 parent.children.push(id);
             }
 
-            nodes.ids[id] = node;
-            if (props.name) {
-                nodes.name2id[props.name] = id;
-                nodes.id2name[id] = props.name;
-            }
+            nodes.register(node);
 
             if (tag === 'game') {
-                gameNode = node;
+                nodes.setGameNode(node);
+            } else if (running) {
+                nodeManager.mount(nodes, node);
             }
+
             return node;
-        },
-        childrenMount: function (node, children) {
         },
         unmount: function (node) {
             if (node.parent) {
-                var parent = nodes.ids[node.parent];
+                var parent = nodes.byId(node.parent);
                 parent.children.splice(parent.children.indexOf(node.id), 1);
             }
 
-            delete nodes.ids[node.id];
-            if (node.props.name) {
-                delete nodes.name2id[node.props.name];
-                delete nodes.id2name[node.id];
-            }
+            nodes.unregister(node);
 
             if (node.tag === 'game') {
-                gameNode = null;
+                nodes.setGameNode(null);
+            } else {
+                nodeManager.unmount(nodes, node);
             }
         },
         update: function (node, nextProps, lastProps) {
-            if (lastProps.name && lastProps.name !== nextProps.name) {
-                delete nodes.name2id[node.props.name];
-                delete nodes.id2name[node.id];
-            }
-            if (nextProps.name && lastProps.name !== nextProps.name) {
-                nodes.name2id[nextProps.name] = node.id;
-                nodes.id2name[node.id] = nextProps.name;
-            }
+            node.props = nextProps;
+            nodes.update(node, lastProps);
+            nodeManager.update(nodes, node, lastProps);
         }
     },
     transaction: {
         initialize: function () {
         },
         close: function () {
-            if (gameNode && !running) {
-                game = gameImpl.create(gameNode, nodes);
-
-            } else if (running && !gameNode) {
+            if (nodes.gameNode && !running) {
+                running = true;
+                init(nodes);
+            } else if (running && !nodes.gameNode) {
+                running = false;
                 console.log('destroy');
             }
         }

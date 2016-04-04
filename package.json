@@ -20,6 +20,7 @@
     "Phaser"
   ],
   "dependencies": {
+    "extend": "^3.0.0",
     "invariant": "^2.2.1",
     "p2": "^0.7.1",
     "phaser": "^2.4.6",
