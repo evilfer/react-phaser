@@ -1,12 +1,13 @@
 'use strict';
 
 var utils = require('./utils'),
+    spritePropertes = require('../properties/base/Phaser.Sprite'),
 
-    updateSprite = utils.genPropertyUpdate('actor'),
+    updateSprite = utils.genPropertyMapUpdate(spritePropertes),
     
     mountSprite = function (nodes, node) {
-        var {x = 0, y = 0, sprite} = node.props;
-        node.obj = new Phaser.Sprite(nodes.game(), x, y, sprite);
+        var props = node.props;
+        node.obj = new Phaser.Sprite(nodes.game(), props.x, props.y, props.assetKey);
         utils.addNodeDisplayObject(nodes, node);
         updateSprite(nodes, node);
     },

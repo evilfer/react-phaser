@@ -1,8 +1,9 @@
 'use strict';
 
 var utils = require('./utils'),
+    groupPropertes = require('../properties/base/Phaser.Group'),
 
-    updateGroup = utils.genPropertyUpdate('actor'),
+    updateGroup = utils.genPropertyMapUpdate(groupPropertes),
 
     mountGroup = function (nodes, node) {
         node.obj = new Phaser.Group(nodes.game());

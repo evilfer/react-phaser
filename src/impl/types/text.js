@@ -1,12 +1,13 @@
 'use strict';
 
 var utils = require('./utils'),
+    textPropertes = require('../properties/base/Phaser.Text'),
 
-    updateText = utils.genPropertyUpdate('text'),
+    updateText = utils.genPropertyMapUpdate(textPropertes),
     
     mountText = function (nodes, node) {
-        var {x = 0, y = 0, content, style} = node.props;
-        node.obj = new Phaser.Text(nodes.game(), x, y, content, style);
+        var props = node.props;
+        node.obj = new Phaser.Text(nodes.game(), props.x, props.y, props.text, props.style);
         utils.addNodeDisplayObject(nodes, node);
     },
 

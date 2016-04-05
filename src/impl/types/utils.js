@@ -1,7 +1,6 @@
 'use strict';
 
 var extend = require('extend'),
-    properties = require('../properties'),
 
     addNodeDisplayObject = function (nodes, wrapper) {
         var parent = nodes.byId(wrapper.parent),
@@ -10,16 +9,8 @@ var extend = require('extend'),
         group.add(wrapper.obj);
     },
 
-    genPropertyUpdate = function (groups) {
-        if (!Array.isArray(groups)) {
-            groups = [groups];
-        }
-        groups = groups.map(function (key) {
-            return properties[key]
-        });
-        groups.unshift({});
 
-        var props = extend.apply(null, groups);
+    genPropertyMapUpdate = function (props) {
         return function (nodes, node, changeProps = Object.keys(node.props), prevProps = null) {
             for (var i = 0; i < changeProps.length; i++) {
                 var prop = changeProps[i];
@@ -33,5 +24,5 @@ var extend = require('extend'),
 
 module.exports = {
     addNodeDisplayObject: addNodeDisplayObject,
-    genPropertyUpdate: genPropertyUpdate
+    genPropertyMapUpdate: genPropertyMapUpdate
 };
