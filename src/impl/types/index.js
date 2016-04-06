@@ -8,5 +8,6 @@ module.exports = {
     cursors: require('./cursors'),
     collides: require('./collides'),
     overlaps: require('./overlaps'),
-    text: require('./text')
+    text: require('./text'),
+    button: require('./button')
 };

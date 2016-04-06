@@ -2,11 +2,11 @@
 
 var extend = require('extend'),
 
-    addNodeDisplayObject = function (nodes, wrapper) {
+    addNodeDisplayObject = function (nodes, wrapper, obj) {
         var parent = nodes.byId(wrapper.parent),
             group = parent.tag === 'game' ? parent.obj.world : parent.obj;
 
-        group.add(wrapper.obj);
+        group.add(obj || wrapper.obj);
     },
 
 
