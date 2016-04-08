@@ -16,7 +16,8 @@ var gulp = require('gulp'),
                     'part6/part6': './src/examples/part6.js',
                     'part7/part7': './src/examples/part7.js',
                     'part8/part8': './src/examples/part8.js',
-                    'button/button': './src/examples/button.js'
+                    'button/button': './src/examples/button.js',
+                    'graphics/graphics': './src/examples/graphics.js'
                 },
                 watch: doWatch,
                 module: {

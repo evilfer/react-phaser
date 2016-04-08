@@ -47,6 +47,11 @@ module.exports = {
 
             return node;
         },
+        childrenMount: function (node) {
+            if (running) {
+                nodeManager.childrenMount(nodes, node);
+            }
+        },
         unmount: function (node) {
             if (node.parent) {
                 var parent = nodes.byId(node.parent);
@@ -77,6 +82,17 @@ module.exports = {
             } else if (running && !nodes.gameNode) {
                 running = false;
                 console.log('destroy');
+            }
+            if (running) {
+                var transactionListeners = nodes.popTransactionListeners();
+                if (transactionListeners) {
+                    for (var i = 0; i < transactionListeners.length; i++) {
+                        var node = nodes.byId(transactionListeners[i]);
+                        if (node) {
+                            nodeManager.notifyTransaction(nodes, node);
+                        }
+                    }
+                }
             }
         }
     }

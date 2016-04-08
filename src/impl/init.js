@@ -7,6 +7,7 @@ var nodeManager = require('./node-manager'),
             nodeManager.mount(nodes, child);
             if (child.children.length > 0) {
                 initChildren(nodes, child.children);
+                nodeManager.childrenMount(nodes, child);
             }
         });
     },
