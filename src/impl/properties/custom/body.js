@@ -7,14 +7,12 @@ module.exports = extend(
     {},
     utils.generatePrefixedBasicPropMap('body', ['immovable', 'collideWorldBounds']),
     utils.generatePrefixedPointPropMap('body', ['bounce', 'gravity']),
-    {
-        bodyPhysics: function (nodes, node, value, isNew) {
-            if (isNew && value) {
-                var physics = nodes.game().physics,
-                    system = value !== true ? value : physics.system;
+    utils.generateMountOnlyPropMap({
+        bodyPhysics: function (nodes, node, value) {
+            var physics = nodes.game().physics,
+                system = value !== true ? value : physics.system;
 
-                nodes.game().physics.enable(node.obj, system);
-            }
+            nodes.game().physics.enable(node.obj, system);
         }
-    }
+    })
 );

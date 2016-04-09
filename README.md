@@ -1,17 +1,41 @@
-# react-phaser
+# React-phaser
 
-A Phaser implementation done in React. It's in experimental phase, and the API
-is likely to go through large changes.
+A React-based wrapper for phaser.
 
-The `src/examples` folder contains the React-based code illustrating how
-to implement different parts of the
-[Phaser.io Making your first game tutorial](http://phaser.io/tutorials/making-your-first-phaser-game).
+React-phaser allows game developers to create a Phaser game through React nodes. Main features:
 
-Under `examples` you can find ready-to-run html pages corresponding to
-the examples. As required by Phaser, on order to run these pages in a
-browser you need to serve them from a web server.
+- Phaser objects are represented as React VDOM nodes; react-phaser reacts to VDOM changes by adding, updating or removing Phaser objects.
+- React-phaser users a React version unhooked from browser DOM manipulation.
 
-- `part5`: demonstrates loading assets, creating sprites and groups, and
-defining colliding actors.
-- `part6`: demonstrate keyboard input.
-- `part7`: demonstrate modifying the VDOM (removing sprite) during the game.
+See the [example code](https://github.com/evilfer/react-phaser/tree/master/src/examples) to see an implementation of the Phaser [Making your first game tutorial](http://phaser.io/tutorials/making-your-first-phaser-game).
+
+## Getting started
+
+Install with:
+```bash
+npm install react-phaser
+```
+
+In your code:
+
+```javascript
+var React = require('react-phaser'),
+
+    MyGame = React.createClass({
+    	render: function () {
+			return <game/>;
+		}
+    });
+
+React.render(<MyGame/>, 'game');
+```
+
+- `require('react-phaser')` provides the same object as `require('react')`; however, when react-phaser is loaded it modifies React to remove the DOM manipulation functionality, and inject the Phaser wrapper.
+- `React.render` is a method added by react-phaser. that initializes the React lifecycle for the element passes as first parameter. The second parameter (a string) identifies the virtual container where the game is rendered. This is not a DOM element, but rather a react-phaser internal unique string.
+- `<game>` is one of the tags that react-phaser makes available (see [list of available tags](https://github.com/evilfer/react-phaser/wiki/Tags)).
+
+
+
+## Further reading
+
+- [react-phaser wiki](https://github.com/evilfer/react-phaser/wiki)

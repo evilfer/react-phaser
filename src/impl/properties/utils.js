@@ -60,11 +60,34 @@ var generateBasicPropMap = function (props) {
             };
             return acc;
         }, {});
+    },
+
+    generateAliasPropMap = function (aliases) {
+        return Object.keys(aliases).reduce(function (acc, alias) {
+            var prop = aliases[alias];
+            acc[alias] = function (nodes, node, value) {
+                node.obj[prop] = value;
+            };
+            return acc;
+        }, {});
+    },
+    generateMountOnlyPropMap = function (propMap) {
+        return Object.keys(propMap).reduce(function (acc, prop) {
+            var impl = propMap[prop];
+            acc[prop] = function (nodes, node, value, isNew) {
+                if (isNew) {
+                    impl(nodes, node, value);
+                }
+            };
+            return acc;
+        }, {});
     };
 
 module.exports = {
     generateBasicPropMap: generateBasicPropMap,
     generatePrefixedBasicPropMap: generatePrefixedBasicPropMap,
     generatePointPropMap: generatePointPropMap,
-    generatePrefixedPointPropMap: generatePrefixedPointPropMap
+    generatePrefixedPointPropMap: generatePrefixedPointPropMap,
+    generateAliasPropMap: generateAliasPropMap,
+    generateMountOnlyPropMap: generateMountOnlyPropMap
 };

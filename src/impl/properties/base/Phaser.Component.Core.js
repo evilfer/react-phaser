@@ -1,9 +1,7 @@
 'use strict';
 
+var utils = require('../utils');
 
-
-module.exports = {
-    'assetKey': function (nodes, node, value) {
-        node.obj.key = value;
-    }
-};
+module.exports = utils.generateAliasPropMap({
+    assetKey: 'key'
+});
