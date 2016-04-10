@@ -84,15 +84,24 @@ var React = require('../native'),
                     <button x={0} y={0} assetKey="button" frames={[2, 1, 0]}>
                         <text text="hi!"/>
                     </button>
-                    <graphics x={200} y={10}>
-                        <shape fill={0xFF3300} lineWidth={10} lineColor={0xffd900}>
+                    <graphics x={20} y={10}>
+                        <shape fill={0xFF3300} strokeWidth={10} stroke={0xffd900}>
                             <line x1={50} y1={50} x2={250} y2={50}/>
                             <lineto x={100} y={100}/>
                             <lineto x={250} y={220}/>
                             <lineto x={50} y={220}/>
                             <lineto x={50} y={50}/>
                         </shape>
-                        <shape fill={0xFF700B} lineWidth={10} lineColor={0xFF0000} lineAlpha={0.8}>
+                        <shape x={20} y={40} fill={0xFF3300} strokeWidth={10} stroke={0xffd900}>
+                            <line x1={50} y1={50} x2={250} y2={50}/>
+                            <lineto x={100} y={100}/>
+                            <lineto x={250} y={220}/>
+                            <lineto x={50} y={220}/>
+                            <lineto x={50} y={50}/>
+                        </shape>
+                        <shape x={40} y={80} fill={0xFF3300} strokeWidth={10} stroke={0xffd900}
+                               d="m50,50l250,50l100,100l250,200l50,220l50,50"/>
+                        <shape fill={0xFF700B} strokeWidth={10} stroke={0xFF0000} strokeAlpha={0.8}>
                             <line x1={210} y1={300} x2={450} y2={320}/>
                             <lineto x={570} y={350}/>
                             <curveto cpx={600} cpy={0} x={480} y={100}/>
@@ -100,12 +109,12 @@ var React = require('../native'),
                             <lineto x={410} y={200}/>
                             <lineto x={210} y={300}/>
                         </shape>
-                        <rect lineWidth={2} lineColor={0x0000FF}
+                        <rect strokeWidth={2} stroke={0x0000FF}
                               x={50} y={250} width={100} height={100}/>
                         <circle fill={0xFFFF0B} fillAlpha={0.5}
                                 x={470} y={200} diameter={200}/>
 
-                        <line lineWidth={20} lineColor={0x33FF00}
+                        <line strokeWidth={20} stroke={0x33FF00}
                               x1={30} y1={30} x2={600} y2={600}/>
 
                     </graphics>

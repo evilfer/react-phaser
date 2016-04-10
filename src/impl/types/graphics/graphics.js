@@ -24,7 +24,6 @@ var utils = require('../utils'),
     },
 
     redraw = function (nodes, node) {
-        console.log('redraw');
         node.obj.clear();
         draw(nodes, node);
     },
@@ -33,7 +32,7 @@ var utils = require('../utils'),
         for (var i = 0; i < node.children.length; i++) {
             var child = nodes.byId(node.children[i]);
             if (itemTypes[child.tag]) {
-                itemTypes[child.tag].draw(nodes, child, node.obj);
+                itemTypes[child.tag].draw(nodes, child, node.obj, 0, 0);
             }
         }
     };

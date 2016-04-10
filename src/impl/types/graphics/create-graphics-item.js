@@ -16,12 +16,11 @@ var create = function (draw) {
         },
 
 
-        drawWrapper = function (nodes, node, graphics) {
-            var fill = typeof node.props.fill !== 'undefined' ||
-                    typeof node.props.fillAlpha !== 'undefined',
-                line = typeof node.props.lineWidth !== 'undefined' ||
-                    typeof node.props.lineColor !== 'undefined' ||
-                    typeof node.props.lineAlpha !== 'undefined';
+        drawWrapper = function (nodes, node, graphics, x0, y0) {
+            var fill = typeof node.props.fill !== 'undefined',
+                line = typeof node.props.stroke!== 'undefined' ||
+                    typeof node.props.strokeWidth !== 'undefined' ||
+                    typeof node.props.strokeAlpha !== 'undefined';
 
             if (fill) {
                 var fillColor = typeof node.props.fill !== 'undefined' ? node.props.fill : 0x000000,
@@ -29,15 +28,15 @@ var create = function (draw) {
                 graphics.beginFill(fillColor, fillAlpha);
             }
             if (line) {
-                var lineColor = typeof node.props.lineColor !== 'undefined' ? node.props.lineColor : 0x000000,
-                    lineAlpha = typeof node.props.lineAlpha === 'number' ? node.props.lineAlpha : 1,
-                    lineWidth = typeof node.props.lineWidth === 'number' ? node.props.lineWidth : 1;
+                var lineColor = typeof node.props.stroke !== 'undefined' ? node.props.stroke : 0x000000,
+                    lineAlpha = typeof node.props.strokeAlpha === 'number' ? node.props.strokeAlpha : 1,
+                    lineWidth = typeof node.props.strokeWidth === 'number' ? node.props.strokeWidth : 1;
                 graphics.lineStyle(lineWidth, lineColor, lineAlpha);
             } else {
                 graphics.lineStyle(0);
             }
 
-            draw(nodes, node, graphics);
+            draw(nodes, node, graphics, x0, y0);
 
             if (fill) {
                 graphics.endFill();
