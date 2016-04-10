@@ -44,8 +44,8 @@ var createGraphicsNode = require('./create-graphics-item'),
             var sx0 = x0 + (node.props.x || 0),
                 sy0 = y0 + (node.props.y || 0);
 
-            if (node.props.d) {
-                var parts = node.props.d.match(/([a-z][0-9,]+)/g);
+            if (node.props.s) {
+                var parts = node.props.s.replace(/\s/g, '').match(/([a-z][0-9,]+)/g);
                 for (var i = 0; i < parts.length; i++) {
                     var part = parts[i],
                         command = part.charAt(0),
