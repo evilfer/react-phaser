@@ -12,7 +12,9 @@ module.exports = extend({
         overlaps: require('./overlaps'),
         text: require('./text'),
         button: require('./button'),
-        graphics: require('./graphics/graphics')
+        graphics: require('./graphics/graphics'),
+        rendertexture: require('./graphics/rendertexture'),
+        renderimage: require('./graphics/renderimage')
     },
     require('./graphics/renderers')
 );

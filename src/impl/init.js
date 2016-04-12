@@ -1,27 +1,20 @@
 var nodeManager = require('./node-manager'),
     loadAssets = require('./assets'),
 
-    initChildren = function (nodes, children) {
-        children.forEach(function (childId) {
-            var child = nodes.ids[childId];
-            nodeManager.mount(nodes, child);
-            if (child.children.length > 0) {
-                initChildren(nodes, child.children);
-                nodeManager.childrenMount(nodes, child);
-            }
-        });
-    },
+    preloadTags = ['assets'],
 
     init = function (nodes) {
-        var {assets = {}, width, height, mode = Phaser.AUTO} = nodes.gameNode.props;
+        var props = nodes.gameNode.props;
 
         var gameImpl = {
             preload: function () {
-                loadAssets(nodes.gameNode, assets);
+                loadAssets(nodeManager, nodes);
             },
             create: function () {
                 nodeManager.mount(nodes, nodes.gameNode);
-                initChildren(nodes, nodes.gameNode.children);
+                nodeManager.initChildren(nodes, nodes.gameNode.children.filter(function (nodeId) {
+                    return preloadTags.indexOf(nodes.byId(nodeId).tag) < 0;
+                }));
             },
             update: function () {
                 for (var i = 0; i < nodes.gameNode.collisions.length; i++) {
@@ -40,7 +33,7 @@ var nodeManager = require('./node-manager'),
                 }
             }
         };
-        nodes.gameNode.obj = new Phaser.Game(width, height, mode, '', gameImpl);
+        nodes.gameNode.obj = new Phaser.Game(props.width, props.height, props.mode || Phaser.AUTO, '', gameImpl);
     };
 
 module.exports = init;

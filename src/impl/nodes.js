@@ -79,7 +79,7 @@ Nodes.prototype.byName = function (name) {
 Nodes.prototype.parent = function (node, tag) {
     while(true) {
         var parent = this.ids[node.parent];
-        if (parent === null || parent.tag === tag) {
+        if (!parent || parent.tag === tag) {
             return parent;
         } else {
             node = parent;

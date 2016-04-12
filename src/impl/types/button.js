@@ -5,14 +5,15 @@ var utils = require('./utils'),
 
     updateButton = utils.genPropertyMapUpdate(buttonPropertes),
 
-    mountSButton = function (nodes, node) {
-        var props = node.props;
+    mountButton = function (nodes, node) {
+        var props = node.props,
+            key = props.assetKey;
 
         node.button = new Phaser.Button(
                 nodes.game(),
                 props.x,
                 props.y,
-                props.assetKey,
+                key,
                 props.onClick,
                 node,
                 props.frames[0],
@@ -37,7 +38,7 @@ var utils = require('./utils'),
     };
 
 module.exports = {
-    mount: mountSButton,
+    mount: mountButton,
     unmount: unmountButton,
     update: updateButton
 };
