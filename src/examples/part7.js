@@ -16,8 +16,9 @@ var React = require('../native'),
             };
         },
 
-        onCursorInput: function (cursors, getActor) {
-            var player = getActor('player');
+        onInput: function (context) {
+            var player = context.nodes.player.obj,
+                cursors = context.input.cursors;
 
             if (cursors.left.isDown) {
                 player.body.velocity.x = -150;
@@ -71,7 +72,7 @@ var React = require('../native'),
                         <collides with="platforms"/>
                         <overlaps with="stars" onOverlap={this.collectStar}/>
                     </sprite>
-                    <cursors onInput={this.onCursorInput}/>
+                    <input cursors={true} onInput={this.onInput}/>
                 </game>
             );
         }

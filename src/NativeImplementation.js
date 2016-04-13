@@ -24,7 +24,7 @@ module.exports = {
         mount: function (id, tag, props, parent) {
             invariant(!(tag === 'game' && nodes.gameNode), 'Only one game node can be mounted.');
             invariant(!(tag !== 'game' && !parent), 'Only \'game\' can be root node.');
-            invariant(!(props.name && nodes.idByName(props.name)), 'Cannot repeat names.');
+            invariant(!(props.name && nodes.byName(props.name)), 'Cannot repeat names.');
 
             var node = {
                 id: id,

@@ -22,8 +22,9 @@ var React = require('../native'),
             };
         },
 
-        onCursorInput: function (cursors, getActor) {
-            var player = getActor('player');
+        onInput: function (context) {
+            var player = context.nodes.player.obj,
+                cursors = context.input.cursors;
 
             if (cursors.left.isDown) {
                 player.body.velocity.x = -150;
@@ -43,6 +44,8 @@ var React = require('../native'),
         },
 
         collectStar: function (playerNode, starNode) {
+            console.log(arguments);
+            
             this.setState({
                 stars: this.state.stars.filter(function (_, i) {
                     return i !== starNode.props.i;
@@ -80,7 +83,7 @@ var React = require('../native'),
                     </sprite>
                     <text text={`Score: ${this.state.score}`} style={scoreStyle}
                           x={16} y={16}/>
-                    <cursors onInput={this.onCursorInput}/>
+                    <input cursors={true} onInput={this.onInput}/>
                 </game>
             );
         }

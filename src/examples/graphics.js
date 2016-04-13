@@ -23,8 +23,9 @@ var React = require('../native'),
             };
         },
 
-        onCursorInput: function (cursors, getActor) {
-            var player = getActor('player');
+        onInput: function (context) {
+            var player = context.nodes.player.obj,
+                cursors = context.input.cursors;
 
             if (cursors.left.isDown) {
                 player.body.velocity.x = -150;
@@ -111,7 +112,7 @@ var React = require('../native'),
                               x1={30} y1={30} x2={600} y2={600}/>
 
                     </graphics>
-                    <cursors onInput={this.onCursorInput}/>
+                    <input cursors={true} onInput={this.onInput}/>
                 </game>
             );
         }

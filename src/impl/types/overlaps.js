@@ -1,20 +1,32 @@
 'use strict';
 
-var mountCollides = function (nodes, node) {
-    var overlapsWithId = nodes.idByName(node.props.with);
-    node.obj = {
-        pair: [node.parent, overlapsWithId],
-        callback: function (a, b) {
-            node.props.onOverlap(nodes.byId(a.rnodeid), nodes.byId(b.rnodeid))
-        }
+var systemName = require('../physic-system-name'),
+
+    mountOverlaps = function (nodes, node) {
+        var a = nodes.byId(node.parent),
+            b = nodes.byName(node.props.with),
+            name = systemName(node.props.system),
+            onOverlap = node.props.onOverlap;
+
+        node.obj = {
+            a: a,
+            b: b,
+            onUpdate: function (context) {
+                context.game.physics[name].overlap(a.obj, b.obj, function (overlappingA, overlappingB) {
+                    onOverlap(nodes.byId(overlappingA.rnodeid), nodes.byId(overlappingB.rnodeid), context, a, b);
+                });
+            }
+        };
+
+        nodes.gameNode.addUpdateListener(node.obj.onUpdate);
+    },
+
+    unmountOverlaps = function (nodes, node) {
+        nodes.gameNode.removeUpdateListener(node.obj.onUpdate);
     };
 
-    nodes.gameNode.overlaps.push(node.obj);
-};
-
 module.exports = {
-    mount: mountCollides,
-    unmount: function () {
-    },
+    mount: mountOverlaps,
+    unmount: unmountOverlaps,
     update: null
 };

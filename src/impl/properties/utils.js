@@ -1,6 +1,8 @@
 'use strict';
 
-var generateBasicPropMap = function (props) {
+var invariant = require('invariant'),
+
+    generateBasicPropMap = function (props) {
         return props.reduce(function (acc, prop) {
             acc[prop] = function (nodes, node, value) {
                 node.obj[prop] = value;
@@ -81,6 +83,14 @@ var generateBasicPropMap = function (props) {
             };
             return acc;
         }, {});
+    },
+    generateFixedPropMap = function (props) {
+        return props.reduce(function (acc, prop) {
+            acc[prop] = function (nodes, node, value, isNew) {
+                invariant(isNew, "Property '%s' of '%s' cannot change.", prop, node.tag);
+            };
+            return acc;
+        }, {});
     };
 
 module.exports = {
@@ -89,5 +99,6 @@ module.exports = {
     generatePointPropMap: generatePointPropMap,
     generatePrefixedPointPropMap: generatePrefixedPointPropMap,
     generateAliasPropMap: generateAliasPropMap,
-    generateMountOnlyPropMap: generateMountOnlyPropMap
+    generateMountOnlyPropMap: generateMountOnlyPropMap,
+    generateFixedPropMap: generateFixedPropMap
 };

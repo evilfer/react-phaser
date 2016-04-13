@@ -7,8 +7,9 @@ var React = require('../native'),
         'dude': {type: 'spritesheet', src: '../assets/dude.png', width: 32, height: 48}
     },
 
-    onCursorInput = function (cursors, getActor) {
-        var player = getActor('player');
+    onInput = function (context) {
+        var player = context.nodes.player.obj,
+            cursors = context.input.cursors;
 
         if (cursors.left.isDown) {
             player.body.velocity.x = -150;
@@ -43,6 +44,6 @@ React.render((
             <animation id="right" frames={[5, 6, 7, 8]} fps={10} loop={true}/>
             <collides with="platforms"/>
         </sprite>
-        <cursors onInput={onCursorInput}/>
+        <input cursors={true} onInput={onInput}/>
     </game>
 ), 'game');
