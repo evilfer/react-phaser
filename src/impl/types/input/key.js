@@ -7,7 +7,7 @@ var utils = require('../utils'),
 
     events = ["onDown", "onUp", "onHoldCallback"],
 
-    mountKey = function (nodes, node) {
+    initKey = function (nodes, node) {
         var context = nodes.context();
         if (context.input && node.props.keyName && node.props.keyCode) {
             var game = nodes.game(),
@@ -32,7 +32,7 @@ var utils = require('../utils'),
         }
     },
 
-    unmountKey = function (nodes, node) {
+    killKey = function (nodes, node) {
         if (node.obj) {
             var game = nodes.game(),
                 context = nodes.context();
@@ -43,7 +43,7 @@ var utils = require('../utils'),
     };
 
 module.exports = {
-    mount: mountKey,
-    unmount: unmountKey,
+    init: initKey,
+    kill: killKey,
     update: updateKey
 };

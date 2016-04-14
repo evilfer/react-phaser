@@ -2,7 +2,7 @@
 
 var systemName = require('../physic-system-name'),
 
-    mountCollides = function (nodes, node) {
+    initCollides = function (nodes, node) {
         var a = nodes.byId(node.parent),
             b = nodes.byName(node.props.with),
             name = systemName(node.props.system);
@@ -18,12 +18,12 @@ var systemName = require('../physic-system-name'),
         nodes.gameNode.addUpdateListener(node.obj.onUpdate);
     },
 
-    unmountCollides = function (nodes, node) {
+    killCollides = function (nodes, node) {
         nodes.gameNode.removeUpdateListener(node.obj.onUpdate);
     };
 
 module.exports = {
-    mount: mountCollides,
-    unmount: unmountCollides,
+    init: initCollides,
+    kill: killCollides,
     update: null
 };

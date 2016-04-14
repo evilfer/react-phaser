@@ -7,18 +7,18 @@ var utils = require('../utils'),
 
     itemTypes = require('./renderers'),
 
-    mountGraphics = function (nodes, node) {
+    initGraphics = function (nodes, node) {
         var props = node.props;
         node.obj = new Phaser.Graphics(nodes.game(), props.x, props.y);
         utils.addNodeDisplayObject(nodes, node);
         updateGraphics(nodes, node);
     },
 
-    unmountGraphics = function (nodes, node) {
+    killGraphics = function (nodes, node) {
         node.obj.kill();
     },
 
-    childrenMount = function (nodes, node) {
+    onChildrenInit = function (nodes, node) {
         nodes.cancelTransactionNofitication(node.id);
         draw(nodes, node);
     },
@@ -38,9 +38,9 @@ var utils = require('../utils'),
     };
 
 module.exports = {
-    mount: mountGraphics,
-    childrenMount: childrenMount,
-    unmount: unmountGraphics,
+    init: initGraphics,
+    onChildrenInit: onChildrenInit,
+    kill: killGraphics,
     update: updateGraphics,
     notifyTransaction: redraw
 };

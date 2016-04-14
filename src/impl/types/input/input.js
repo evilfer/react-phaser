@@ -3,8 +3,9 @@
 var defaultPointerNumber = 2,
     events = ["onDown", "onUp", "onTap", "onHold"],
 
-    mountInput = function (nodes, node) {
-        var context = nodes.context();
+    initInput = function (nodes, node) {
+        var context = nodes.context(node);
+        
         if (!context.input) {
             var game = nodes.game(),
                 pointerCount = node.props.pointers || defaultPointerNumber,
@@ -18,8 +19,7 @@ var defaultPointerNumber = 2,
                 input: input
             };
             context.input = input;
-
-
+            
             for (var i = 0; i < pointerCount; i++) {
                 if (i >= defaultPointerNumber) {
                     game.input.addPointer();
@@ -53,8 +53,7 @@ var defaultPointerNumber = 2,
     };
 
 module.exports = {
-    mount: mountInput,
-    unmount: function () {
-    },
+    init: initInput,
+    kill: null,
     update: null
 };

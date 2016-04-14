@@ -5,18 +5,18 @@ var utils = require('./utils'),
 
     updateText = utils.genPropertyMapUpdate(textPropertes),
     
-    mountText = function (nodes, node) {
+    initText = function (nodes, node) {
         var props = node.props;
         node.obj = new Phaser.Text(nodes.game(), props.x, props.y, props.text, props.style);
         utils.addNodeDisplayObject(nodes, node);
     },
 
-    unmountText = function (nodes, node) {
+    killText = function (nodes, node) {
         node.obj.kill();
     };
 
 module.exports = {
-    mount: mountText,
-    unmount: unmountText,
+    init: initText,
+    kill: killText,
     update: updateText
 };

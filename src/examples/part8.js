@@ -44,8 +44,6 @@ var React = require('../native'),
         },
 
         collectStar: function (playerNode, starNode) {
-            console.log(arguments);
-            
             this.setState({
                 stars: this.state.stars.filter(function (_, i) {
                     return i !== starNode.props.i;

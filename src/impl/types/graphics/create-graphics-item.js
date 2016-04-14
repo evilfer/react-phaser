@@ -44,8 +44,8 @@ var create = function (draw) {
         };
 
     return {
-        mount: requestNotification,
-        unmount: requestNotification,
+        init: requestNotification,
+        kill: requestNotification,
         update: requestNotificationOnUpdate,
         draw: drawWrapper
     };

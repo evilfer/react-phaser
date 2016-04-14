@@ -7,15 +7,15 @@ var utils = require('../utils'),
 
     itemTypes = require('./renderers'),
 
-    mountGraphics = function (nodes, node) {
+    initGraphics = function (nodes, node) {
         node.obj = new Phaser.Graphics(nodes.game(), 0, 0);
         updateGraphics(nodes, node);
     },
 
-    unmountGraphics = function (nodes, node) {
+    killGraphics = function (nodes, node) {
     },
 
-    childrenMount = function (nodes, node) {
+    onChildrenInit = function (nodes, node) {
         draw(nodes, node);
 
         var texture = new Phaser.RenderTexture(nodes.game(), node.obj.width, node.obj.height);
@@ -44,8 +44,8 @@ var utils = require('../utils'),
     };
 
 module.exports = {
-    mount: mountGraphics,
-    childrenMount: childrenMount,
-    unmount: unmountGraphics,
+    init: initGraphics,
+    onChildrenInit: onChildrenInit,
+    kill: killGraphics,
     update: updateGraphics
 };

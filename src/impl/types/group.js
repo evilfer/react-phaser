@@ -5,15 +5,14 @@ var utils = require('./utils'),
 
     updateGroup = utils.genPropertyMapUpdate(groupPropertes),
 
-    mountGroup = function (nodes, node) {
+    initGroup = function (nodes, node) {
         node.obj = new Phaser.Group(nodes.game());
         utils.addNodeDisplayObject(nodes, node);
         updateGroup(nodes, node);
     };
 
 module.exports = {
-    mount: mountGroup,
-    unmount: function () {
-    },
+    init: initGroup,
+    kill: null,
     update: updateGroup
 };

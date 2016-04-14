@@ -5,7 +5,7 @@ var utils = require('./utils'),
 
     updateButton = utils.genPropertyMapUpdate(buttonPropertes),
 
-    mountButton = function (nodes, node) {
+    initButton = function (nodes, node) {
         var props = node.props,
             key = props.assetKey;
 
@@ -33,12 +33,12 @@ var utils = require('./utils'),
         updateButton(nodes, node);
     },
 
-    unmountButton = function (nodes, node) {
+    killButton = function (nodes, node) {
         node.obj.kill();
     };
 
 module.exports = {
-    mount: mountButton,
-    unmount: unmountButton,
+    init: initButton,
+    kill: killButton,
     update: updateButton
 };

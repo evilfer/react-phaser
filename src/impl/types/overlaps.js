@@ -2,7 +2,7 @@
 
 var systemName = require('../physic-system-name'),
 
-    mountOverlaps = function (nodes, node) {
+    initOverlaps = function (nodes, node) {
         var a = nodes.byId(node.parent),
             b = nodes.byName(node.props.with),
             name = systemName(node.props.system),
@@ -21,12 +21,12 @@ var systemName = require('../physic-system-name'),
         nodes.gameNode.addUpdateListener(node.obj.onUpdate);
     },
 
-    unmountOverlaps = function (nodes, node) {
+    killOverlaps = function (nodes, node) {
         nodes.gameNode.removeUpdateListener(node.obj.onUpdate);
     };
 
 module.exports = {
-    mount: mountOverlaps,
-    unmount: unmountOverlaps,
+    init: initOverlaps,
+    kill: killOverlaps,
     update: null
 };

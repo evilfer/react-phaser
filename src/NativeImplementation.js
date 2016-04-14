@@ -8,16 +8,10 @@
  */
 'use strict';
 
-var invariant = require('invariant');
+var invariant = require('invariant'),
+    Nodes = require('./impl/nodes'),
 
-
-var nodeManager = require('./impl/node-manager.js');
-var init = require('./impl/init');
-var Nodes = require('./impl/nodes');
-
-var nodes = new Nodes();
-var running = false;
-
+    nodes = new Nodes();
 
 module.exports = {
     components: {
@@ -27,30 +21,23 @@ module.exports = {
             invariant(!(props.name && nodes.byName(props.name)), 'Cannot repeat names.');
 
             var node = {
-                id: id,
-                tag: tag,
-                props: props,
-                parent: parent && parent.id,
-                children: []
-            };
+                    id: id,
+                    tag: tag,
+                    props: props,
+                    parent: parent && parent.id,
+                    children: [],
+                    initialized: false
+                };
+
             if (parent) {
                 parent.children.push(id);
             }
 
-            nodes.register(node);
-
-            if (tag === 'game') {
-                nodes.setGameNode(node);
-            } else if (running) {
-                nodeManager.mount(nodes, node);
-            }
-
+            nodes.mountNode(node);
             return node;
         },
         childrenMount: function (node) {
-            if (running) {
-                nodeManager.childrenMount(nodes, node);
-            }
+            nodes.onChildrenMount(node);
         },
         unmount: function (node) {
             if (node.parent) {
@@ -58,42 +45,22 @@ module.exports = {
                 parent.children.splice(parent.children.indexOf(node.id), 1);
             }
 
-            nodes.unregister(node);
-
             if (node.tag === 'game') {
                 nodes.setGameNode(null);
             } else {
-                nodeManager.unmount(nodes, node);
+                nodes.unmountNode(node);
             }
         },
         update: function (node, nextProps, lastProps) {
             node.props = nextProps;
-            nodes.update(node, lastProps);
-            nodeManager.update(nodes, node, lastProps);
+            nodes.updateNode(node, lastProps);
         }
     },
     transaction: {
         initialize: function () {
         },
         close: function () {
-            if (nodes.gameNode && !running) {
-                running = true;
-                init(nodes);
-            } else if (running && !nodes.gameNode) {
-                running = false;
-                console.log('destroy');
-            }
-            if (running) {
-                var transactionListeners = nodes.popTransactionListeners();
-                if (transactionListeners) {
-                    for (var i = 0; i < transactionListeners.length; i++) {
-                        var node = nodes.byId(transactionListeners[i]);
-                        if (node) {
-                            nodeManager.notifyTransaction(nodes, node);
-                        }
-                    }
-                }
-            }
+            nodes.notifyTransaction();
         }
     }
 };

@@ -5,19 +5,19 @@ var utils = require('./utils'),
 
     updateSprite = utils.genPropertyMapUpdate(spritePropertes),
     
-    mountSprite = function (nodes, node) {
+    initSprite = function (nodes, node) {
         var props = node.props;
         node.obj = new Phaser.Sprite(nodes.game(), props.x, props.y, props.assetKey);
         utils.addNodeDisplayObject(nodes, node);
         updateSprite(nodes, node);
     },
 
-    unmountSprite = function (nodes, node) {
+    killSprite = function (nodes, node) {
         node.obj.kill();
     };
 
 module.exports = {
-    mount: mountSprite,
-    unmount: unmountSprite,
+    init: initSprite,
+    kill: killSprite,
     update: updateSprite
 };
