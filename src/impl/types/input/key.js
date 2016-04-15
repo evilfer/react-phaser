@@ -8,11 +8,11 @@ var utils = require('../utils'),
     events = ["onDown", "onUp", "onHoldCallback"],
 
     initKey = function (nodes, node) {
-        var context = nodes.context();
+        var context = nodes.context(node);
         if (context.input && node.props.keyName && node.props.keyCode) {
-            var game = nodes.game(),
+            var phaserInput = nodes.gameState(node).obj.input,
                 input = context.input,
-                key = game.input.keyboard.addKey(node.props.keyCode);
+                key = phaserInput.keyboard.addKey(node.props.keyCode);
 
             if (!input.keys) {
                 input.keys = {};
@@ -35,7 +35,7 @@ var utils = require('../utils'),
     killKey = function (nodes, node) {
         if (node.obj) {
             var game = nodes.game(),
-                context = nodes.context();
+                context = nodes.context(node);
 
             game.input.keyboard.removeKey(node.obj.keyCode);
             delete context.input[node.props.keyName];

@@ -1,17 +1,18 @@
 'use strict';
 
-var extend = require('extend'),
-
-    addNodeDisplayObject = function (nodes, wrapper, obj) {
+var addNodeDisplayObject = function (nodes, wrapper, obj) {
         var parent = nodes.byId(wrapper.parent),
-            group = parent.tag === 'game' ? parent.obj.world : parent.obj;
+            group = parent.obj.world || parent.obj;
 
         group.add(obj || wrapper.obj);
     },
 
 
     genPropertyMapUpdate = function (props) {
-        return function (nodes, node, changeProps = Object.keys(node.props), prevProps = null) {
+        return function (nodes, node, changeProps, prevProps) {
+            if (typeof changeProps === 'undefined') {
+                changeProps = Object.keys(node.props);
+            }
             for (var i = 0; i < changeProps.length; i++) {
                 var prop = changeProps[i];
                 var propertyUpdate = props[prop];

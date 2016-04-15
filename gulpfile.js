@@ -18,7 +18,8 @@ var gulp = require('gulp'),
                     'part8/part8': './src/examples/part8.js',
                     'button/button': './src/examples/button.js',
                     'graphics/graphics': './src/examples/graphics.js',
-                    'graphics-button/graphics-button': './src/examples/graphics-button.js'
+                    'graphics-button/graphics-button': './src/examples/graphics-button.js',
+                    'states/states': './src/examples/states.js'
                 },
                 watch: doWatch,
                 module: {

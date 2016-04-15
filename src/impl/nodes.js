@@ -114,7 +114,7 @@ Nodes.prototype.mountNode = function (node) {
         this.setGameNode(node);
     }
 
-    if (this.shouldInitialize(node) && this.initImmediately(node.tag)) {
+    if (this.shouldInitialize(node) && this.initImmediately(node)) {
         this._initNode(node, 'init');
     }
 };
@@ -180,7 +180,7 @@ Nodes.prototype.initChildren = function (children, filterTags) {
     for (var i = 0; i < children.length; i++) {
         var child = this.ids[children[i]];
         if (this.shouldInitialize(child) && (!filterTags || filterTags.indexOf(child.tag) >= 0)) {
-            if (this.initImmediately(child.tag)) {
+            if (this.initImmediately(child)) {
                 this._initNode(child, 'init');
                 if (child.children.length > 0) {
                     this.initChildren(child.children);
@@ -193,14 +193,9 @@ Nodes.prototype.initChildren = function (children, filterTags) {
     }
 };
 
-Nodes.prototype.initImmediately = function (tag) {
-    switch (tag) {
-        case 'game':
-        case 'state':
-            return false;
-        default:
-            return true;
-    }
+Nodes.prototype.initImmediately = function (node) {
+    var nodeType = nodeTypes[node.tag];
+    return nodeType && !nodeType.initOnChildrenMount;
 };
 
 module.exports = Nodes;

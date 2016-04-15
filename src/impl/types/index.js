@@ -5,6 +5,7 @@ var extend = require('extend');
 module.exports = extend(
     {
         game: require('./game'),
+        state: require('./state'),
         sprite: require('./sprite'),
         group: require('./group'),
         animation: require('./animation'),

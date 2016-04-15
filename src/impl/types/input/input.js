@@ -7,11 +7,11 @@ var defaultPointerNumber = 2,
         var context = nodes.context(node);
         
         if (!context.input) {
-            var game = nodes.game(),
+            var phaserInput = nodes.gameState(node).obj.input,
                 pointerCount = node.props.pointers || defaultPointerNumber,
                 input = {
-                    mousePointer: game.input.mousePointer,
-                    activePointer: game.input.activePointer,
+                    mousePointer: phaserInput.mousePointer,
+                    activePointer: phaserInput.activePointer,
                     pointers: []
                 };
 
@@ -22,27 +22,27 @@ var defaultPointerNumber = 2,
             
             for (var i = 0; i < pointerCount; i++) {
                 if (i >= defaultPointerNumber) {
-                    game.input.addPointer();
+                    phaserInput.addPointer();
                 }
-                input.pointers[i] = game.input['pointer' + (i + 1)];
+                input.pointers[i] = phaserInput['pointer' + (i + 1)];
             }
 
             events.forEach(function (event) {
                 var listener = node.props[event];
                 if (listener) {
-                    game.input[event].add(function (pointer) {
+                    phaserInput[event].add(function (pointer) {
                         listener(pointer, context);
                     });
                 }
             });
 
             if (node.props.cursors) {
-                input.cursors = game.input.keyboard.createCursorKeys();
+                input.cursors = phaserInput.keyboard.createCursorKeys();
             }
 
             if (node.props.keys) {
                 input.keys = Object.keys(node.props.keys).reduce(function (acc, key) {
-                    acc[key] = game.input.keyboard.addKey(node.props.keys[key]);
+                    acc[key] = phaserInput.keyboard.addKey(node.props.keys[key]);
                 }, {});
             }
 
