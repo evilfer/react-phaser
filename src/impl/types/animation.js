@@ -1,7 +1,9 @@
 'use strict';
 
-var initAnimation = function (nodes, node) {
-        var parentNode = nodes.byId(node.parent);
+var treeUtils = require('../tree-utils'),
+
+    initAnimation = function (node, tree) {
+        var parentNode = treeUtils.parent(node, tree);
         node.obj = parentNode.obj.animations.add(node.props.id, node.props.frames, node.props.fps, node.props.loop);
     };
 

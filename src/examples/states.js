@@ -1,7 +1,7 @@
 var React = require('../native'),
 
     textStyle = {
-        fontSize: '32px',
+        fontSize: '12px',
         fill: '#fff'
     },
 

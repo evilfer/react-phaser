@@ -1,22 +1,23 @@
 'use strict';
 
-var create = function (draw) {
+var treeUtils = require('../../tree-utils'),
+    create = function (draw) {
 
-    var requestNotification = function (nodes, node) {
-            var graphics = nodes.parent(node, 'graphics');
+    var requestNotification = function (node, tree, treeMethods) {
+            var graphics = treeUtils.parent(node, tree, 'graphics');
             if (graphics) {
-                nodes.requestTransactionNofitication(graphics.id);
+                treeMethods.requestTransactionNofitication(graphics.id);
             }
         },
 
-        requestNotificationOnUpdate = function (nodes, node, changeProps) {
-            if (changeProps.length > 0) {
-                requestNotification(nodes, node);
+        update = function (node, prevProps, tree, treeMethods) {
+            if (treeUtils.propsChanged(node.props, prevProps)) {
+                requestNotification(node, tree, treeMethods);
             }
         },
 
 
-        drawWrapper = function (nodes, node, graphics, x0, y0) {
+        drawWrapper = function (node, tree, graphics, x0, y0) {
             var fill = typeof node.props.fill !== 'undefined',
                 line = typeof node.props.stroke!== 'undefined' ||
                     typeof node.props.strokeWidth !== 'undefined' ||
@@ -36,7 +37,7 @@ var create = function (draw) {
                 graphics.lineStyle(0);
             }
 
-            draw(nodes, node, graphics, x0, y0);
+            draw(node, tree, graphics, x0, y0);
 
             if (fill) {
                 graphics.endFill();
@@ -46,7 +47,7 @@ var create = function (draw) {
     return {
         init: requestNotification,
         kill: requestNotification,
-        update: requestNotificationOnUpdate,
+        update: update,
         draw: drawWrapper
     };
 };

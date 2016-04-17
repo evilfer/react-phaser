@@ -1,14 +1,14 @@
 var createGraphicsNode = require('./create-graphics-item'),
 
     renderers = {
-        circle: function (nodes, node, graphics, x0, y0) {
+        circle: function (node, tree, graphics, x0, y0) {
             graphics.drawCircle(
                 x0 + (node.props.x || 0),
                 y0 + (node.props.y || 0),
                 node.props.diameter || 0
             );
         },
-        rect: function (nodes, node, graphics, x0, y0) {
+        rect: function (node, tree, graphics, x0, y0) {
             graphics.drawRect(
                 x0 + (node.props.x || 0),
                 y0 + (node.props.y || 0),
@@ -16,7 +16,7 @@ var createGraphicsNode = require('./create-graphics-item'),
                 node.props.height || 0
             );
         },
-        line: function (nodes, node, graphics, x0, y0) {
+        line: function (node, tree, graphics, x0, y0) {
             graphics.moveTo(
                 x0 + (node.props.x1 || 0),
                 y0 + (node.props.y1 || 0)
@@ -26,13 +26,13 @@ var createGraphicsNode = require('./create-graphics-item'),
                 y0 + (node.props.y2 || 0)
             );
         },
-        lineto: function (nodes, node, graphics, x0, y0) {
+        lineto: function (node, tree, graphics, x0, y0) {
             graphics.lineTo(
                 x0 + (node.props.x || 0),
                 y0 + (node.props.y || 0)
             );
         },
-        curveto: function (nodes, node, graphics, x0, y0) {
+        curveto: function (node, tree, graphics, x0, y0) {
             graphics.quadraticCurveTo(
                 node.props.cpx + x0,
                 node.props.cpy + y0,
@@ -40,7 +40,7 @@ var createGraphicsNode = require('./create-graphics-item'),
                 node.props.y + y0
             );
         },
-        shape: function (nodes, node, graphics, x0, y0) {
+        shape: function (node, tree, graphics, x0, y0) {
             var sx0 = x0 + (node.props.x || 0),
                 sy0 = y0 + (node.props.y || 0);
 
@@ -74,9 +74,9 @@ var createGraphicsNode = require('./create-graphics-item'),
             }
 
             for (i = 0; i < node.children.length; i++) {
-                var child = nodes.byId(node.children[i]);
+                var child = tree.nodes[node.children[i]];
                 if (renderers[child.tag]) {
-                    renderers[child.tag](nodes, child, graphics, sx0, sy0);
+                    renderers[child.tag](child, tree, graphics, sx0, sy0);
                 }
             }
         }

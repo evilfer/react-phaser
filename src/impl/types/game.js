@@ -1,12 +1,12 @@
 'use strict';
 
-var updateGame = function (nodes, node, changeProps, prevProps) {
-        if (prevProps && changeProps.indexOf('stateName') >= 0) {
+var updateGame = function (node, lastProps) {
+        if (lastProps && lastProps.stateName !== node.props.stateName) {
             node.obj.state.start(node.props.stateName);
         }
     },
 
-    onChildrenInit = function (nodes, node) {
+    onChildrenInit = function (node, tree, nodeMethods) {
         node._updateMethods = [];
         node.addUpdateListener = function (listener) {
             node._updateMethods.push(listener);
@@ -34,7 +34,7 @@ var updateGame = function (nodes, node, changeProps, prevProps) {
                             }
                         });
                     }
-                    nodes.initChildren(node.children, ['assets']);
+                    nodeMethods.initChildren(node, tree, {include: ['assets']});
                 },
                 create: function () {
 
@@ -42,7 +42,7 @@ var updateGame = function (nodes, node, changeProps, prevProps) {
                         node.obj.physics.startSystem(node.props.physics);
                     }
 
-                    nodes.initChildren(node.children);
+                    nodeMethods.initChildren(node, tree);
 
                     if (node.props.stateName) {
                         game.state.start(node.props.stateName);
@@ -58,13 +58,13 @@ var updateGame = function (nodes, node, changeProps, prevProps) {
             game = new Phaser.Game(props.width, props.height, props.mode || Phaser.AUTO, '', gameImpl),
             context = {
                 game: game,
-                nodes: nodes.name2node
+                nodes: tree.byname
             };
 
         node.obj = game;
         node.context = context;
 
-        updateGame(nodes, node, Object.keys(node.props));
+        updateGame(node, null, tree);
     };
 
 module.exports = {
@@ -72,5 +72,5 @@ module.exports = {
     onChildrenInit: onChildrenInit,
     update: updateGame,
     kill: null,
-    initOnChildrenMount: true
+    deferredInit: true
 };

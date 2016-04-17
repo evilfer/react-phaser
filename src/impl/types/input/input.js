@@ -1,13 +1,19 @@
 'use strict';
 
-var defaultPointerNumber = 2,
+var treeUtils = require('../../tree-utils'),
+
+    defaultPointerNumber = 2,
     events = ["onDown", "onUp", "onTap", "onHold"],
 
-    initInput = function (nodes, node) {
-        var context = nodes.context(node);
-        
-        if (!context.input) {
-            var phaserInput = nodes.gameState(node).obj.input,
+    clearInput = function (node, tree) {
+        var context = treeUtils.stateNode(node, tree).context;
+        delete context.input;
+    },
+
+    initInput = function (node, tree) {
+        var stateNode = treeUtils.stateNode(node, tree);
+        if (!stateNode.context.input) {
+            var phaserInput = stateNode.obj.input,
                 pointerCount = node.props.pointers || defaultPointerNumber,
                 input = {
                     mousePointer: phaserInput.mousePointer,
@@ -18,8 +24,9 @@ var defaultPointerNumber = 2,
             node.obj = {
                 input: input
             };
-            context.input = input;
-            
+
+            stateNode.context.input = input;
+
             for (var i = 0; i < pointerCount; i++) {
                 if (i >= defaultPointerNumber) {
                     phaserInput.addPointer();
@@ -47,13 +54,14 @@ var defaultPointerNumber = 2,
             }
 
             if (node.props.onInput) {
-                nodes.gameNode.addUpdateListener(node.props.onInput);
+                stateNode.addUpdateListener(node.props.onInput);
             }
         }
     };
 
 module.exports = {
     init: initInput,
+    clear: clearInput,
     kill: null,
     update: null
 };

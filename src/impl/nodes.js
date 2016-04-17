@@ -96,11 +96,6 @@ Nodes.prototype.parentInitd = function (node) {
     return !parent || parent.initialized;
 };
 
-
-Nodes.prototype.shouldInitialize = function (node) {
-    return !node.initialized && this.parentInitd(node);
-};
-
 Nodes.prototype._invoke = function (node, method) {
     var nodeType = nodeTypes[node.tag];
     if (nodeType && nodeType[method]) {
@@ -114,7 +109,7 @@ Nodes.prototype.mountNode = function (node) {
         this.setGameNode(node);
     }
 
-    if (this.shouldInitialize(node) && this.initImmediately(node)) {
+    if (!node.initialized && this.parentInitd(node) && this.initImmediately(node)) {
         this._initNode(node, 'init');
     }
 };
@@ -176,10 +171,39 @@ Nodes.prototype.notifyTransaction = function () {
     }
 };
 
-Nodes.prototype.initChildren = function (children, filterTags) {
+Nodes.prototype.clearChildren = function (children, options) {
+    var options = options || {},
+        include = options.include,
+        exclude = options.exclude;
+
     for (var i = 0; i < children.length; i++) {
-        var child = this.ids[children[i]];
-        if (this.shouldInitialize(child) && (!filterTags || filterTags.indexOf(child.tag) >= 0)) {
+        var child = this.ids[children[i]],
+            shouldClear = child.initialized &&
+                (!include || include.indexOf(child.tag) >= 0) &&
+                (!exclude || exclude.indexOf(child.tag) < 0);
+
+        if (shouldClear) {
+            this._invoke(child, 'clear');
+            child.initialized = false;
+            if (child.children.length > 0) {
+                this.clearChildren(child.children);
+            }
+        }
+    }
+};
+
+Nodes.prototype.initChildren = function (children, options) {
+    var _options = options || {},
+        include = _options.include,
+        exclude = _options.exclude;
+
+    for (var i = 0; i < children.length; i++) {
+        var child = this.ids[children[i]],
+            shouldInit = this.parentInitd(child) && !child.initialized &&
+                (!include || include.indexOf(child.tag) >= 0) &&
+                (!exclude || exclude.indexOf(child.tag) < 0);
+
+        if (shouldInit) {
             if (this.initImmediately(child)) {
                 this._initNode(child, 'init');
                 if (child.children.length > 0) {

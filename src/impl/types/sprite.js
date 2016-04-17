@@ -1,18 +1,18 @@
 'use strict';
 
-var utils = require('./utils'),
+var treeUtils = require('../tree-utils'),
     spritePropertes = require('../properties/base/Phaser.Sprite'),
 
-    updateSprite = utils.genPropertyMapUpdate(spritePropertes),
+    updateSprite = treeUtils.genPropertyMapUpdate(spritePropertes),
     
-    initSprite = function (nodes, node) {
+    initSprite = function (node, tree) {
         var props = node.props;
-        node.obj = new Phaser.Sprite(nodes.game(), props.x, props.y, props.assetKey);
-        utils.addNodeDisplayObject(nodes, node);
-        updateSprite(nodes, node);
+        node.obj = new Phaser.Sprite(treeUtils.game(tree), props.x, props.y, props.assetKey);
+        treeUtils.addDisplayObject(node, tree);
+        updateSprite(node, null, tree);
     },
 
-    killSprite = function (nodes, node) {
+    killSprite = function (node, tree) {
         node.obj.kill();
     };
 

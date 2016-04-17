@@ -1,26 +1,31 @@
 'use strict';
 
-var utils = require('../utils'),
+var treeUtils = require('../../tree-utils'),
     graphicsPropertes = require('../../properties/base/Phaser.Graphics'),
 
-    updateGraphics = utils.genPropertyMapUpdate(graphicsPropertes),
+    updateGraphics = treeUtils.genPropertyMapUpdate(graphicsPropertes),
 
     itemTypes = require('./renderers'),
 
-    initGraphics = function (nodes, node) {
-        node.obj = new Phaser.Graphics(nodes.game(), 0, 0);
-        updateGraphics(nodes, node);
+    initGraphics = function (node, tree) {
+        node.obj = new Phaser.Graphics(treeUtils.game(tree), 0, 0);
+        updateGraphics(node, null, tree);
     },
 
-    killGraphics = function (nodes, node) {
+    killGraphics = function (node) {
+        node.obj.kill();
     },
 
-    onChildrenInit = function (nodes, node) {
-        draw(nodes, node);
+    onChildrenInit = function (node, tree) {
+        draw(node, tree);
 
-        var texture = new Phaser.RenderTexture(nodes.game(), node.obj.width, node.obj.height);
+        var game = treeUtils.game(tree),
+            texture = new Phaser.RenderTexture(game, node.obj.width, node.obj.height);
+
         texture.renderXY(node.obj, 0, 0);
+
         var url = texture.getBase64();
+
         texture.destroy();
         node.obj.destroy();
 
@@ -28,17 +33,17 @@ var utils = require('../utils'),
             var w = node.props.frameWidth || texture.width,
                 h = node.props.frameHeight || texture.height;
 
-            node.obj = nodes.game().load.spritesheet(node.props.assetKey, url, w, h);
+            node.obj = game.load.spritesheet(node.props.assetKey, url, w, h);
         } else {
-            node.obj = nodes.game().load.image(node.props.assetKey, url);
+            node.obj = game.load.image(node.props.assetKey, url);
         }
     },
 
-    draw = function (nodes, node) {
+    draw = function (node, tree) {
         for (var i = 0; i < node.children.length; i++) {
-            var child = nodes.byId(node.children[i]);
+            var child = tree.nodes[node.children[i]];
             if (itemTypes[child.tag]) {
-                itemTypes[child.tag].draw(nodes, child, node.obj, 0, 0);
+                itemTypes[child.tag].draw(child, tree, node.obj, 0, 0);
             }
         }
     };

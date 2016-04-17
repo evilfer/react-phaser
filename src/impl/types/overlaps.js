@@ -1,11 +1,13 @@
 'use strict';
 
-var systemName = require('../physic-system-name'),
+var treeUtils = require('../tree-utils'),
+    systemName = require('../physic-system-name'),
 
-    initOverlaps = function (nodes, node) {
-        var a = nodes.byId(node.parent),
-            b = nodes.byName(node.props.with),
+    initOverlaps = function (node, tree) {
+        var a = tree.nodes[node.parent],
+            b = tree.byname[node.props.with],
             name = systemName(node.props.system),
+            stateNode = treeUtils.stateNode(node, tree),
             onOverlap = node.props.onOverlap;
 
         node.obj = {
@@ -13,12 +15,12 @@ var systemName = require('../physic-system-name'),
             b: b,
             onUpdate: function (context) {
                 context.game.physics[name].overlap(a.obj, b.obj, function (overlappingA, overlappingB) {
-                    onOverlap(nodes.byId(overlappingA.rnodeid), nodes.byId(overlappingB.rnodeid), context, a, b);
+                    onOverlap(tree.nodes[overlappingA.rnodeid], tree.nodes[overlappingB.rnodeid], context, a, b);
                 });
             }
         };
 
-        nodes.gameNode.addUpdateListener(node.obj.onUpdate);
+        stateNode.addUpdateListener(node.obj.onUpdate);
     },
 
     killOverlaps = function (nodes, node) {

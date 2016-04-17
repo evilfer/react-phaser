@@ -1,11 +1,13 @@
 'use strict';
 
-var systemName = require('../physic-system-name'),
+var treeUtils = require('../tree-utils'),
+    systemName = require('../physic-system-name'),
 
-    initCollides = function (nodes, node) {
-        var a = nodes.byId(node.parent),
-            b = nodes.byName(node.props.with),
-            name = systemName(node.props.system);
+    initCollides = function (node, tree) {
+        var a = tree.nodes[node.parent],
+            b = tree.byname[node.props.with],
+            name = systemName(node.props.system),
+            stateNode = treeUtils.stateNode(node, tree);
 
         node.obj = {
             a: a,
@@ -15,11 +17,12 @@ var systemName = require('../physic-system-name'),
             }
         };
 
-        nodes.gameNode.addUpdateListener(node.obj.onUpdate);
+        stateNode.addUpdateListener(node.obj.onUpdate);
     },
 
-    killCollides = function (nodes, node) {
-        nodes.gameNode.removeUpdateListener(node.obj.onUpdate);
+    killCollides = function (node, tree) {
+        var stateNode = treeUtils.stateNode(node, tree);
+        stateNode.removeUpdateListener(node.obj.onUpdate);
     };
 
 module.exports = {

@@ -1,14 +1,14 @@
 'use strict';
 
-var utils = require('./utils'),
+var treeUtils = require('../tree-utils'),
     textPropertes = require('../properties/base/Phaser.Text'),
 
-    updateText = utils.genPropertyMapUpdate(textPropertes),
+    updateText = treeUtils.genPropertyMapUpdate(textPropertes),
     
-    initText = function (nodes, node) {
+    initText = function (node, tree) {
         var props = node.props;
-        node.obj = new Phaser.Text(nodes.game(), props.x, props.y, props.text, props.style);
-        utils.addNodeDisplayObject(nodes, node);
+        node.obj = new Phaser.Text(treeUtils.game(tree), props.x, props.y, props.text, props.style);
+        treeUtils.addDisplayObject(node, tree);
     },
 
     killText = function (nodes, node) {

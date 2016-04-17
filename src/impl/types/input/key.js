@@ -1,17 +1,17 @@
 'use strict';
 
-var utils = require('../utils'),
+var treeUtils= require('../../tree-utils'),
     keyPropertes = require('../../properties/custom/key'),
 
-    updateKey = utils.genPropertyMapUpdate(keyPropertes),
+    updateKey = treeUtils.genPropertyMapUpdate(keyPropertes),
 
     events = ["onDown", "onUp", "onHoldCallback"],
 
-    initKey = function (nodes, node) {
-        var context = nodes.context(node);
-        if (context.input && node.props.keyName && node.props.keyCode) {
-            var phaserInput = nodes.gameState(node).obj.input,
-                input = context.input,
+    initKey = function (node, tree) {
+        var stateNode = treeUtils.stateNode(node, tree);
+        if (stateNode.context.input && node.props.keyName && node.props.keyCode) {
+            var phaserInput = stateNode.obj.input,
+                input = stateNode.context.input,
                 key = phaserInput.keyboard.addKey(node.props.keyCode);
 
             if (!input.keys) {
@@ -25,20 +25,19 @@ var utils = require('../utils'),
                 var listener = node.props[event];
                 if (listener) {
                     key[event].add(function (key) {
-                        listener(key, context);
+                        listener(key, stateNode.context);
                     });
                 }
             });
         }
     },
 
-    killKey = function (nodes, node) {
+    killKey = function (node, tree) {
         if (node.obj) {
-            var game = nodes.game(),
-                context = nodes.context(node);
+            var stateNode = treeUtils.stateNode(node, tree);
 
-            game.input.keyboard.removeKey(node.obj.keyCode);
-            delete context.input[node.props.keyName];
+            stateNode.obj.keyboard.removeKey(node.obj.keyCode);
+            delete stateNode.context.input[node.props.keyName];
         }
     };
 

@@ -1,18 +1,22 @@
 'use strict';
 
-var utils = require('./utils'),
+var treeUtils = require('../tree-utils'),
     groupPropertes = require('../properties/base/Phaser.Group'),
 
-    updateGroup = utils.genPropertyMapUpdate(groupPropertes),
+    updateGroup = treeUtils.genPropertyMapUpdate(groupPropertes),
 
-    initGroup = function (nodes, node) {
-        node.obj = new Phaser.Group(nodes.game());
-        utils.addNodeDisplayObject(nodes, node);
-        updateGroup(nodes, node);
-    };
+    initGroup = function (node, tree) {
+        node.obj = new Phaser.Group(treeUtils.game(tree));
+        treeUtils.addDisplayObject(node, tree);
+        updateGroup(node, null, tree);
+    },
+
+    killGroup = function (node) {
+        node.obj.kill();
+    };;
 
 module.exports = {
     init: initGroup,
-    kill: null,
+    kill: killGroup,
     update: updateGroup
 };

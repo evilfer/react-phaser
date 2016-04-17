@@ -1,38 +1,38 @@
 'use strict';
 
-var utils = require('../utils'),
+var treeUtils = require('../../tree-utils'),
     graphicsPropertes = require('../../properties/base/Phaser.Graphics'),
 
-    updateGraphics = utils.genPropertyMapUpdate(graphicsPropertes),
+    updateGraphics = treeUtils.genPropertyMapUpdate(graphicsPropertes),
 
     itemTypes = require('./renderers'),
 
-    initGraphics = function (nodes, node) {
+    initGraphics = function (node, tree) {
         var props = node.props;
-        node.obj = new Phaser.Graphics(nodes.game(), props.x, props.y);
-        utils.addNodeDisplayObject(nodes, node);
-        updateGraphics(nodes, node);
+        node.obj = new Phaser.Graphics(treeUtils.game(tree), props.x, props.y);
+        treeUtils.addDisplayObject(node, tree);
+        updateGraphics(node, tree);
     },
 
-    killGraphics = function (nodes, node) {
+    killGraphics = function (node) {
         node.obj.kill();
     },
 
-    onChildrenInit = function (nodes, node) {
-        nodes.cancelTransactionNofitication(node.id);
-        draw(nodes, node);
+    onChildrenInit = function (node, tree, treeMethods) {
+        treeMethods.cancelTransactionNofitication(node.id);
+        draw(node, tree);
     },
 
-    redraw = function (nodes, node) {
+    redraw = function (node, tree) {
         node.obj.clear();
-        draw(nodes, node);
+        draw(node, tree);
     },
 
-    draw = function (nodes, node) {
+    draw = function (node, tree) {
         for (var i = 0; i < node.children.length; i++) {
-            var child = nodes.byId(node.children[i]);
+            var child = tree.nodes[node.children[i]];
             if (itemTypes[child.tag]) {
-                itemTypes[child.tag].draw(nodes, child, node.obj, 0, 0);
+                itemTypes[child.tag].draw(child, tree, node.obj, 0, 0);
             }
         }
     };

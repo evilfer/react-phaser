@@ -1,36 +1,37 @@
 'use strict';
 
-var utils = require('./utils'),
+var treeUtils = require('../tree-utils'),
     buttonPropertes = require('../properties/base/Phaser.Button'),
 
-    updateButton = utils.genPropertyMapUpdate(buttonPropertes),
+    updateButton = treeUtils.genPropertyMapUpdate(buttonPropertes),
 
-    initButton = function (nodes, node) {
+    initButton = function (node, tree) {
         var props = node.props,
-            key = props.assetKey;
+            key = props.assetKey,
+            game = treeUtils.game(tree);
 
         node.button = new Phaser.Button(
-                nodes.game(),
-                props.x,
-                props.y,
-                key,
-                props.onClick,
-                node,
-                props.frames[0],
-                props.frames[1],
-                props.frames[2],
-                props.frames[3]
-            );
+            game,
+            props.x,
+            props.y,
+            key,
+            props.onClick,
+            node,
+            props.frames[0],
+            props.frames[1],
+            props.frames[2],
+            props.frames[3]
+        );
 
         if (node.props.children) {
-            node.obj = new Phaser.Group(nodes.game());
+            node.obj = new Phaser.Group(game);
             node.obj.add(node.button);
         } else {
             node.obj = node.button;
         }
 
-        utils.addNodeDisplayObject(nodes, node);
-        updateButton(nodes, node);
+        treeUtils.addDisplayObject(node, tree);
+        updateButton(node, null, tree);
     },
 
     killButton = function (nodes, node) {
