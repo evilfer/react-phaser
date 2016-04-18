@@ -1,6 +1,6 @@
 {
   "name": "react-phaser",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Phaser implementation for React",
   "repository": {
     "type": "git",
