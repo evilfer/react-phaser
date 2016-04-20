@@ -20,7 +20,7 @@ var treeUtils = require('../tree-utils'),
         treeUtils.addDisplayObject(node, tree);
     },
 
-    killText = function (nodes, node) {
+    killText = function (node, tree) {
         node.obj.kill();
     };
 

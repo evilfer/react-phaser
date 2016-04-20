@@ -38,7 +38,7 @@ var treeUtils = require('../../tree-utils'),
                 var listener = node.props[event];
                 if (listener) {
                     phaserInput[event].add(function (pointer) {
-                        listener(pointer, context);
+                        listener(pointer, stateNode.context);
                     });
                 }
             });

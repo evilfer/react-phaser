@@ -34,7 +34,10 @@ var treeUtils = require('../tree-utils'),
         updateButton(node, null, tree);
     },
 
-    killButton = function (nodes, node) {
+    killButton = function (node, tree) {
+        if (node.obj !== node.button) {
+            node.button.kill();
+        }
         node.obj.kill();
     };
 

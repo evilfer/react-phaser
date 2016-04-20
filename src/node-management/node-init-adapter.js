@@ -112,9 +112,9 @@ var create = function (nodeTypes) {
                     },
                     childrenMount: function (node, tree) {
                         if (node.initialized) {
-                            invoke('onChildrenInit', node, tree);
+                            invoke('onChildrenInit', node, tree, methods);
                         } else if (parentInitd(node, tree)) {
-                            init('onChildrenInit', node, tree);
+                            init('onChildrenInit', node, tree, methods);
                         }
                     },
                     unmount: function (node, tree) {

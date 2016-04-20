@@ -12,8 +12,8 @@ var treeUtils = require('../tree-utils'),
     },
 
     killGroup = function (node) {
-        node.obj.kill();
-    };;
+        node.obj.destroy();
+    };
 
 module.exports = {
     init: initGroup,
