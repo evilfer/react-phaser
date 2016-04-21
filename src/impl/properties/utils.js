@@ -14,6 +14,9 @@ var invariant = require('invariant'),
     generatePrefixedBasicPropMap = function (prefix, props) {
         return props.reduce(function (acc, prop) {
             acc[prefix + prop.charAt(0).toUpperCase() + prop.slice(1)] = function (node, value) {
+                console.log(node.obj);
+                console.log(node.obj[prefix]);
+                console.log(prefix, prop, value);
                 node.obj[prefix][prop] = value;
             };
             return acc;
@@ -84,6 +87,11 @@ var invariant = require('invariant'),
             return acc;
         }, {});
     },
+
+    generateCustomPropMap = function (props) {
+        return props;
+    },
+
     generateFixedPropMap = function (props) {
         return props.reduce(function (acc, prop) {
             acc[prop] = function (node, value, prevValue, isNew) {
@@ -100,5 +108,6 @@ module.exports = {
     generatePrefixedPointPropMap: generatePrefixedPointPropMap,
     generateAliasPropMap: generateAliasPropMap,
     generateMountOnlyPropMap: generateMountOnlyPropMap,
+    generateCustomPropMap: generateCustomPropMap,
     generateFixedPropMap: generateFixedPropMap
 };

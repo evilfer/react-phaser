@@ -6,6 +6,10 @@ var treeUtils = require('../../tree-utils'),
     updateGraphics = treeUtils.genPropertyMapUpdate(graphicsPropertes),
 
     itemTypes = require('./renderers'),
+    onTextureTypes = {
+        'texturetext': require('./texturetext')
+    },
+
 
     initGraphics = function (node, tree) {
         node.obj = new Phaser.Graphics(treeUtils.game(tree), 0, 0);
@@ -23,7 +27,8 @@ var treeUtils = require('../../tree-utils'),
             texture = new Phaser.RenderTexture(game, node.obj.width, node.obj.height);
 
         texture.renderXY(node.obj, 0, 0);
-
+        renderOnTexture(node, tree, texture);
+        
         var url = texture.getBase64();
 
         texture.destroy();
@@ -44,6 +49,16 @@ var treeUtils = require('../../tree-utils'),
             var child = tree.nodes[node.children[i]];
             if (itemTypes[child.tag]) {
                 itemTypes[child.tag].draw(child, tree, node.obj, 0, 0);
+            }
+        }
+    },
+
+    renderOnTexture = function (node, tree, texture) {
+        for (var i = 0; i < node.children.length; i++) {
+            var child = tree.nodes[node.children[i]];
+            console.log(child.tag, onTextureTypes[child.tag]);
+            if (onTextureTypes[child.tag]) {
+                onTextureTypes[child.tag].draw(child, tree, texture);
             }
         }
     };

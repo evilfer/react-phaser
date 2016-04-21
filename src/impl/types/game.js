@@ -1,10 +1,9 @@
 'use strict';
 
-var updateGame = function (node, lastProps) {
-        if (lastProps && lastProps.stateName !== node.props.stateName) {
-            node.obj.state.start(node.props.stateName);
-        }
-    },
+var treeUtils = require('../tree-utils'),
+    gamePropertes = require('../properties/base/Phaser.Game'),
+
+    updateGame = treeUtils.genPropertyMapUpdate(gamePropertes),
 
     onChildrenInit = function (node, tree, nodeMethods) {
         node._updateMethods = [];
@@ -21,6 +20,7 @@ var updateGame = function (node, lastProps) {
         var props = node.props,
             gameImpl = {
                 preload: function () {
+                    updateGame(node, null, tree);
                     if (props.assets) {
                         Object.keys(props.assets).forEach(function (key) {
                             var asset = props.assets[key];
@@ -63,8 +63,6 @@ var updateGame = function (node, lastProps) {
 
         node.obj = game;
         node.context = context;
-
-        updateGame(node, null, tree);
     };
 
 module.exports = {

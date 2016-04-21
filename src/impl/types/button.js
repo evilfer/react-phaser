@@ -36,9 +36,10 @@ var treeUtils = require('../tree-utils'),
 
     killButton = function (node, tree) {
         if (node.obj !== node.button) {
-            node.button.kill();
+            node.obj.destroy();
+        } else {
+            node.obj.kill();
         }
-        node.obj.kill();
     };
 
 module.exports = {
